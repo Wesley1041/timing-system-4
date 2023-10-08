@@ -31,8 +31,6 @@ function Init()
 	
 	-- Start listening for remotes
 	_remoteHandler:Init()
-	-- Initialize board
-	_boardService:Init()
 	-- Initialize leaderstats
 	_leaderstatsService:Init()
 

@@ -1,25 +1,38 @@
 local config = {
 	
 	-- Admin users
-	AdminUsers = {"Wesley1041"},
+	-- List of users who are able to reset the timing board
+	AdminUsers = {"Wesley1041", "SomebodyElse"},
+	-- List of groups and ranks that are able to reset the timing board
 	AdminRoles = {
 		{
 			GroupId = 12345678,
 			Rank = 200
-		}
+		},
+		{
+			GroupId = 23456789,
+			Rank = 150
+		},
 	},
 
 	-- Settings
-	PlayerMustBeSeated = false,
+	-- Whether the player must be seated or not
+	PlayerMustBeSeated = true,
+	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 
 	-- Anti Cheat
-	CheckForAntiCheat = false,
+	-- Whether anti-cheat should be used
+	CheckForAntiCheat = true,
+	-- Lap times below this time will be considered as cheating
 	MinimumLapTime = 1,
+	-- Sector times below this time will be considered as cheating
 	MinimumSectorTime = 1,
+	-- Whether to kick a user when they are caught cheating
 	KickWhenCheat = true,
 
 	-- Input mapping
+	-- Which key should be used in order to view the table GUI on the player's screen
 	ToggleBoardGuiKey = Enum.KeyCode.Q,
 
 	-- References

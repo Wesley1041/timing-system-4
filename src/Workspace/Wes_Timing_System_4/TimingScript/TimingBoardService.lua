@@ -6,8 +6,10 @@ local _config = require(script.Parent.Parent._Config)
 local _helpers = require(script.Parent.Parent.Modules.Helpers)
 
 -- Variables
-local timeTable
+local board = _config.Board
+local timeTable: ScrollingFrame = board.SurfaceGui.Times
 local rowCount = 0
+local rowHeightPixels = timeTable:FindFirstChild("_Item").Size.Y.Offset
 
 -- Update the board in workspace with the new times (sorted list)
 function service:UpdateBoard(times: table)
@@ -22,14 +24,10 @@ function service:UpdateBoard(times: table)
 	for position, data in pairs(times) do
 		UpdatePosition(position, data)
 	end
-	
-end
 
-function service:Init()
-	
-	local board = _config.Board
-	timeTable = board.SurfaceGui.Times
-	
+	-- Update board height
+	timeTable.CanvasSize = UDim2.new(0, 0, 0, positions * rowHeightPixels)
+
 end
 
 --- Updates a row in the timing board with new data
@@ -63,7 +61,7 @@ function AddRow(position: number): Frame
 	local row = timeTable:FindFirstChild("_Item"):Clone()	
 	row.Name = "Row_" .. position
 	row.Pos.Text = position
-	row.Position = UDim2.new(0, 0, 0, row.Size.Y.Offset * (position - 1))
+	row.Position = UDim2.new(0, 0, 0, rowHeightPixels * (position - 1))
 	row.Visible = true
 	row.Parent = timeTable
 

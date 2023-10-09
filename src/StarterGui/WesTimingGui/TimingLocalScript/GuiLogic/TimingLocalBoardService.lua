@@ -11,6 +11,7 @@ local gui = game.Players.LocalPlayer.PlayerGui:WaitForChild("WesTimingGui")
 local timeTable = gui.TimeTable.Times
 
 local rowCount = 0
+local rowHeightPixels = timeTable:FindFirstChild("_Item").Size.Y.Offset
 
 -- Update the board in workspace with the new times (sorted list)
 function service:UpdateBoard(times: table)
@@ -25,6 +26,9 @@ function service:UpdateBoard(times: table)
 	for position, data in pairs(times) do
 		UpdatePosition(position, data)
 	end
+
+	-- Update board height
+	timeTable.CanvasSize = UDim2.new(0, 0, 0, positions * rowHeightPixels)
 	
 end
 

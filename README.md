@@ -31,7 +31,7 @@ Here are the steps on how to contribute:
 
 ### Coding Standards
 Any code that is merged into the `master` branch should be up to standards:
-- Functions should be commented.
+- Functions should be commented clearly and with detail.
 - Stick to the existing architecture as much as possible.
 - A function must be specifically for one thing.
 

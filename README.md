@@ -1,4 +1,4 @@
-# Wesley1041's Timing System 4 - Jam's Fork
+# Wesley1041's Timing System 4
 This repository hosts the source code and ROBLOX place file in which the model can be tested. This is an open source project where anyone will be able to contribute to it.
 
 ## Coding

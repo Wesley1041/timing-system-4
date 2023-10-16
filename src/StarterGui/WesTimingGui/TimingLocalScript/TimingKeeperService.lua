@@ -16,6 +16,7 @@ local updateLapEvent = _remotes:GetRemoteEvent("UpdateLapEvent")
 local currentSector = 0
 local sectorIsValid = true
 local lapIsValid = true
+local nextLapIsValid = true
 
 -- Timestamps
 local lapStartAt = 0
@@ -65,7 +66,12 @@ function service:HandleLap()
 
     -- Reset states
     currentSector = 1
-    lapIsValid = true
+    if nextLapIsValid then
+        lapIsValid = true
+        _popupService:NewPopup("CURRENT LAP INVALIDATED BY PREVIOUS LAP CORNER CUT", Color3.fromRGB(170, 41, 41), 300)
+    else
+        nextLapIsValid = true
+    end
     sectorIsValid = true
     lapStartAt = time()
 
@@ -85,6 +91,14 @@ function service:AddCornerCut()
     
     _remoteHandler:RequestAddCornerCut()
 
+end
+-- Registers next lap as invalid if a player goes through certain CCs with attributes
+function service:AddNextLapCut()
+    
+    if nextLapIsValid then
+        _popupService:NewPopup("NEXT LAP INVALIDATED", Color3.fromRGB(170, 41, 41), 300)
+    end
+    nextLapIsValid = false
 end
 
 --- Calls the server to handle the lap time

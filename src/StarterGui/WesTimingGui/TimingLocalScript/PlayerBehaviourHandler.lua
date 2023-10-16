@@ -24,6 +24,11 @@ function handler.HandlePlayerTouch(part: BasePart)
     elseif part.Name == "_S2" then
         _keeperService:HandleSector(2)
     elseif part.Name == "_CC" then
+        -- Checks if CC invalidates next lap
+        local nextLapInvalid = part:GetAttribute("InvalidsNextLap")
+        if nextLapInvalid then
+            _keeperService:AddNextLapCut()
+        end
         _keeperService:AddCornerCut()
     end
 

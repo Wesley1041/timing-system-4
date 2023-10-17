@@ -81,7 +81,7 @@ function service:AddCornerCut()
     
     -- If the lap is invalidated for the first time, show a popup
     if lapIsValid then
-        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.InvalidStatePopup, 300)
+        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
     end
 
     -- Register Corner Cut and invalid sector and lap
@@ -97,7 +97,7 @@ function service:AddNextLapCut()
     
     -- If the next lap has not been invalidated yet, show a popup
     if nextLapIsValid then
-        _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.InvalidStatePopup, 300)
+        _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
     end
 
     -- Register next lap as invalid

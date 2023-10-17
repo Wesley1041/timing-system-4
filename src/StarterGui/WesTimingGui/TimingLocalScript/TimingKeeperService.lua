@@ -68,7 +68,6 @@ function service:HandleLap()
     currentSector = 1
     if nextLapIsValid then
         lapIsValid = true
-        _popupService:NewPopup("CURRENT LAP INVALIDATED BY PREVIOUS LAP CORNER CUT", Color3.fromRGB(170, 41, 41), 300)
     else
         nextLapIsValid = true
     end
@@ -82,7 +81,7 @@ function service:AddCornerCut()
     
     -- If the lap is invalidated for the first time, show a popup
     if lapIsValid then
-        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", Color3.fromRGB(170, 41, 41), 300)
+        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.InvalidStatePopup, 300)
     end
 
     -- Register Corner Cut and invalid sector and lap
@@ -92,13 +91,22 @@ function service:AddCornerCut()
     _remoteHandler:RequestAddCornerCut()
 
 end
+
 -- Registers next lap as invalid if a player goes through certain CCs with attributes
 function service:AddNextLapCut()
     
+    -- If the next lap has not been invalidated yet, show a popup
     if nextLapIsValid then
-        _popupService:NewPopup("NEXT LAP INVALIDATED", Color3.fromRGB(170, 41, 41), 300)
+        _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.InvalidStatePopup, 300)
     end
+
+    -- Register next lap as invalid
     nextLapIsValid = false
+    sectorIsValid = false
+    lapIsValid = false
+
+    _remoteHandler:RequestAddCornerCut()
+
 end
 
 --- Calls the server to handle the lap time

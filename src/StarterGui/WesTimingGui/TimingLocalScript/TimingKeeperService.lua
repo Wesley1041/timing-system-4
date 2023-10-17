@@ -133,7 +133,7 @@ end
 ---@param isValid boolean Whether the lap time is valid
 function DisplayLapTime(lapTime: number, isValid: boolean)
     
-    local frameColor = _config.InvalidStatePopup
+    local frameColor = _config.Styles.InvalidStatePopup
     if isValid then
         local state = _dataService:GetLapTimeStatus(lapTime)
         frameColor = _helpers:GetStatePopupColor(state)

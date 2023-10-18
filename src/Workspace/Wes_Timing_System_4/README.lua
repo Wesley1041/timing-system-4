@@ -1,7 +1,7 @@
 --[[
 ----------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
-Wesley1041's Timing System 4 v1.0-beta
+Wesley1041's Timing System 4 v1.1-beta
 
 This fourth timing system is designed to be compatible with places that use StreamingEnabled.
 It is the most feature-rich and modular timing system yet.
@@ -16,10 +16,11 @@ HOW TO INSTALL:
 3. Move the "_S2" part to the end of Sector 2
 4. Duplicate and place the "_CC" parts wherever drivers can exceed track limits.
 If they touch a "_CC" part, their lap will be invalidated.
+You can set the "_CC"'s "InvalidsNextLap" attribute to "true" if you want the "_CC" part to invalidate the driver's next lap.
 5. Move the Board model to wherever you like.
 
 DO NOT UNGROUP ANYTHING! 
-The start, S1, S2, and CC parts can be placed wherever in Workspace, but you cannot change their names.
+The "_Start", "_S1", "_S2", and "_CC" parts can be placed wherever in Workspace, but you cannot change their names.
 
 ----------------------------------------------------------------------------------------------------------
 

@@ -33,6 +33,7 @@ local config = {
 
 	-- Input mapping
 	-- Which key should be used in order to view the table GUI on the player's screen
+	-- Can be set to nil if you wish to disable this function
 	ToggleBoardGuiKey = Enum.KeyCode.Q,
 
 	-- References

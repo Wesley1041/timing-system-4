@@ -68,10 +68,11 @@ function service:HandleLap()
     currentSector = 1
     if nextLapIsValid then
         lapIsValid = true
+        sectorIsValid = true
     else
         nextLapIsValid = true
+        sectorIsValid = false
     end
-    sectorIsValid = true
     lapStartAt = time()
 
 end

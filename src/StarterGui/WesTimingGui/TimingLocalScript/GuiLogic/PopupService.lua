@@ -2,57 +2,76 @@ local service = {}
 
 -- Services
 local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
 
 -- Variables
 local player = game.Players.LocalPlayer
 local gui: ScreenGui = player.PlayerGui:WaitForChild("WesTimingGui")
-local popupFrame: Frame = gui.Popup
+local popupFrame: Frame = gui.PopupTemplate
+
 
 local defaultLength = popupFrame.Size.X.Offset
-local popupVisible = false
 
 local popupVisibilityTime = 3
 local popupMovementDuration = 0.3
+local tweenInfo = TweenInfo.new(popupMovementDuration, Enum.EasingStyle.Linear)
 
 function service:NewPopup(text: string, color: Color3, frameLength: number | nil)
 
     -- Create new concurrent operation
     task.spawn(function()
 
-        -- Wait until the previous prompt is done
-        repeat
-            RunService.RenderStepped:Wait()
-        until not popupVisible
+        -- Move all popups upwards
+        for _,frame in pairs(popupFrame.Parent:GetChildren()) do
+            if frame.Name == "Popup" then
+                local tween = TweenService:Create(frame, tweenInfo, { Position = UDim2.new(
+                    frame.Position.X.Scale,
+                    frame.Position.X.Offset,
+                    frame.Position.Y.Scale,
+                    frame.Position.Y.Offset - frame.Size.Y.Offset)}) -- Moves frame upwards by its own size to make room for another popup
+                tween:Play()
+            end
+        end
 
-        popupFrame.TextLabel.Text = text
-        popupFrame.TextLabel.BackgroundColor3 = color
+        -- Create new popup
+        local newFrame = popupFrame:Clone()
+        newFrame.Parent = popupFrame.Parent
+        newFrame.Name = "Popup"
+    
+        newFrame.TextLabel.Text = text
+        newFrame.TextLabel.BackgroundColor3 = color
         if frameLength ~= nil then
-            popupFrame.Size = UDim2.new(0, frameLength, popupFrame.Size.Y.Scale, popupFrame.Size.Y.Offset)
+            newFrame.Size = UDim2.new(0, frameLength, newFrame.Size.Y.Scale, newFrame.Size.Y.Offset)
         else
-            popupFrame.Size = UDim2.new(0, defaultLength, popupFrame.Size.Y.Scale, popupFrame.Size.Y.Offset)
+            newFrame.Size = UDim2.new(0, defaultLength, newFrame.Size.Y.Scale, newFrame.Size.Y.Offset)
         end
     
-        service:ShowPopup()
+        service:ShowPopup(newFrame)
         task.wait(popupVisibilityTime)
-        service:HidePopup()
+        service:HidePopup(newFrame)
 
     end)
 
 end
 
 --- Slides the popup frame into view
-function service:ShowPopup()
+function service:ShowPopup(newFrame: Frame)
     
-    popupVisible = true
-    SlideGuiObject(popupFrame.TextLabel, 0, popupMovementDuration)
+    SlideGuiObject(newFrame.TextLabel, 0, popupMovementDuration)
 
 end
 
---- Slides the popup frame out of view
-function service:HidePopup()
+--- Fades the frame out
+function service:HidePopup(newFrame: Frame)
     
-    SlideGuiObject(popupFrame.TextLabel, -1, popupMovementDuration)
-    popupVisible = false
+    local tween = TweenService:Create(newFrame.TextLabel, tweenInfo, {Transparency = 1})
+    tween:Play()
+
+    repeat
+        RunService.RenderStepped:Wait()
+    until tween.PlaybackState == Enum.PlaybackState.Completed
+
+    newFrame:Destroy()
 
 end
 

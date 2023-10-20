@@ -80,7 +80,17 @@ end
 function service:AddCornerCut()
     
     -- If the lap is invalidated for the first time, show a popup
+
+
+    -- THIS --
     if lapIsValid then
+        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+    elseif _config.PopupEverycut then
+        _popupService:NewPopup("CORNER CUT", _config.Styles.InvalidStatePopup, 300)
+    end
+
+    -- OR THIS --
+    if lapIsValid or _config.PopupEverycut then
         _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
     end
 

@@ -77,44 +77,33 @@ function service:HandleLap()
 end
 
 --- Adds a corner cut count to the player
-function service:AddCornerCut()
-    
-    -- If the lap is invalidated for the first time, show a popup
+--- @param nextLapInvalid boolean If the corner cut invalidates the next lap
+function service:AddCornerCut(nextLapInvalid: boolean)
 
+    if nextLapIsValid and nextLapInvalid then
 
-    -- THIS --
-    if lapIsValid then
+        if lapIsValid then
+            -- If this lap and the next lap has not been invalidated yet, show a popup
+            _popupService:NewPopup("CORNER CUT - LAP & NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+        else
+            -- If the next lap has not been invalidated yet, show a popup
+            _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+        end
+        nextLapIsValid = false
+        
+    elseif lapIsValid then
+        -- If the lap is invalidated for the first time, show a popup
         _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+
     elseif _config.PopupEverycut then
+        -- Otherwise show this popup instead
         _popupService:NewPopup("CORNER CUT", _config.Styles.InvalidStatePopup, 300)
-    end
-
-    -- OR THIS --
-    if lapIsValid or _config.PopupEverycut then
-        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
     end
 
     -- Register Corner Cut and invalid sector and lap
     sectorIsValid = false
     lapIsValid = false
     
-    _remoteHandler:RequestAddCornerCut()
-
-end
-
--- Registers next lap as invalid if a player goes through certain CCs with attributes
-function service:AddNextLapCut()
-    
-    -- If the next lap has not been invalidated yet, show a popup
-    if nextLapIsValid then
-        _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
-    end
-
-    -- Register next lap as invalid
-    nextLapIsValid = false
-    sectorIsValid = false
-    lapIsValid = false
-
     _remoteHandler:RequestAddCornerCut()
 
 end

@@ -136,6 +136,7 @@ function service:AddPlayer(player: Player): table
 	
 	-- Add new player data
 	playerData = PlayerData.new(player)
+	playerData.LastCornerCutAt = 0
 	data[player.UserId] = playerData
 
 	return playerData

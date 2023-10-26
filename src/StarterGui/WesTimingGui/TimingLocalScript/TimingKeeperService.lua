@@ -17,6 +17,7 @@ local currentSector = 0
 local sectorIsValid = true
 local lapIsValid = true
 local nextLapIsValid = true
+local LastCornerCutAt = 0
 
 -- Timestamps
 local lapStartAt = 0
@@ -80,15 +81,20 @@ end
 --- Adds a corner cut count to the player
 --- @param nextLapInvalid boolean If the corner cut invalidates the next lap
 function service:AddCornerCut(nextLapInvalid: boolean)
+    
+	-- Check CC cooldown
+	if time() - LastCornerCutAt < _config.CornerCutCooldownSeconds then
+		return
+	end
 
     if nextLapIsValid and nextLapInvalid then
 
         if lapIsValid then
             -- If this lap and the next lap has not been invalidated yet, show a popup
-            _popupService:NewPopup("CORNER CUT - LAP & NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+            _popupService:NewPopup("CORNER CUT - LAP & NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 350)
         else
             -- If the next lap has not been invalidated yet, show a popup
-            _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+            _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 320)
         end
         nextLapIsValid = false
         
@@ -100,6 +106,7 @@ function service:AddCornerCut(nextLapInvalid: boolean)
         -- Otherwise show this popup instead
         _popupService:NewPopup("CORNER CUT", _config.Styles.InvalidStatePopup, 300)
     end
+	LastCornerCutAt = time()
 
     -- Register Corner Cut and invalid sector and lap
     sectorIsValid = false

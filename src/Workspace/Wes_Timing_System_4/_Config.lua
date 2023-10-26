@@ -17,11 +17,11 @@ local config = {
 
 	-- Settings
 	-- Whether the player must be seated or not
-	PlayerMustBeSeated = false,
+	PlayerMustBeSeated = true,
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 	-- Whether or not a popup appears per cut, rather than once per lap
-	PopupEverycut = true,
+	PopupEverycut = false,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used

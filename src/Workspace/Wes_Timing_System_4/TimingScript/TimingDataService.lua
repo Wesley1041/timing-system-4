@@ -109,14 +109,8 @@ function service:UpdateCC(player: Player)
 	if playerData == nil then
 		playerData = service:AddPlayer(player)
 	end
-
-	-- Check CC cooldown
-	if time() - playerData.LastCornerCutAt < _config.CornerCutCooldownSeconds then
-		return
-	end
 	
 	-- Update CC count
-	playerData.LastCornerCutAt = time()
 	playerData.CornerCuts += 1
 	_leaderstatsService:UpdateCCs(player, playerData.CornerCuts)
 	

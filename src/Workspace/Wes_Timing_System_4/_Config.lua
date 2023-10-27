@@ -20,6 +20,8 @@ local config = {
 	PlayerMustBeSeated = true,
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
+	-- Whether or not a popup appears per cut, rather than once per lap
+	PopupEverycut = false,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used

@@ -101,7 +101,7 @@ end
 
 --- Adds a CC could to the player
 ---@param player Player The player to be given a CC count
-function service:UpdateCC(player: Player)
+function service:UpdateCC(player: Player, cutsFromBlock: number)
 	
 	local playerData = data[player.UserId]
 
@@ -111,7 +111,7 @@ function service:UpdateCC(player: Player)
 	end
 	
 	-- Update CC count
-	playerData.CornerCuts += 1
+	playerData.CornerCuts += cutsFromBlock
 	_leaderstatsService:UpdateCCs(player, playerData.CornerCuts)
 	
 end

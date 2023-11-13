@@ -27,11 +27,7 @@ function handler.HandlePlayerTouch(part: BasePart)
 
         -- Checks if CC invalidates next lap
         local nextLapInvalid = part:GetAttribute("InvalidsNextLap")
-        if nextLapInvalid then
-            _keeperService:AddNextLapCut()
-        else
-            _keeperService:AddCornerCut()
-        end
+        _keeperService:AddCornerCut(nextLapInvalid)
         
     end
 

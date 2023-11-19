@@ -25,9 +25,9 @@ function module:RequestResetBoard()
 end
 
 --- Calls the server to add a corner cut
-function module:RequestAddCornerCut()
+function module:RequestAddCornerCut(cutsFromBlock: number)
     
-    updateCcEvent:FireServer()
+    updateCcEvent:FireServer(cutsFromBlock)
 
 end
 

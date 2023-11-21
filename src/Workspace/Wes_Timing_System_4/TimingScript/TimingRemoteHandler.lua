@@ -55,9 +55,9 @@ function handler.UpdateLapEvent(player: Player, lapTime: number, isValid: boolea
 
 end
 
-function handler.UpdateCcEvent(player: Player): boolean
+function handler.UpdateCcEvent(player: Player, cutsFromBlock: number): boolean
 
-	_dataService:UpdateCC(player)
+	_dataService:UpdateCC(player, cutsFromBlock)
 
 end
 

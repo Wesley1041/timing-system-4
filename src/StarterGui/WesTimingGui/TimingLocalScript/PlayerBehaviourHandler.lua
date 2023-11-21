@@ -27,7 +27,10 @@ function handler.HandlePlayerTouch(part: BasePart)
 
         -- Checks if CC invalidates next lap
         local nextLapInvalid = part:GetAttribute("InvalidsNextLap")
-        _keeperService:AddCornerCut(nextLapInvalid)
+        -- Gets amount of cuts from CC
+        local cutsFromBlock = part:GetAttribute("CutsFromBlock")
+        if cutsFromBlock == nil then cutsFromBlock = 1 end
+        _keeperService:AddCornerCut(nextLapInvalid, cutsFromBlock)
         
     end
 

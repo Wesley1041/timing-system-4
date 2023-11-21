@@ -80,7 +80,7 @@ end
 
 --- Adds a corner cut count to the player
 --- @param nextLapInvalid boolean If the corner cut invalidates the next lap
-function service:AddCornerCut(nextLapInvalid: boolean)
+function service:AddCornerCut(nextLapInvalid: boolean, cutsFromBlock: number)
     
 	-- Check CC cooldown
 	if time() - LastCornerCutAt < _config.CornerCutCooldownSeconds then
@@ -91,20 +91,20 @@ function service:AddCornerCut(nextLapInvalid: boolean)
 
         if lapIsValid then
             -- If this lap and the next lap has not been invalidated yet, show a popup
-            _popupService:NewPopup("CORNER CUT - LAP & NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 350)
+            _popupService:NewPopup(string.format("CORNER CUT x%d - LAP & NEXT LAP INVALIDATED",cutsFromBlock), _config.Styles.InvalidStatePopup, 350)
         else
             -- If the next lap has not been invalidated yet, show a popup
-            _popupService:NewPopup("CORNER CUT - NEXT LAP INVALIDATED", _config.Styles.InvalidStatePopup, 320)
+            _popupService:NewPopup(string.format("CORNER CUT x%d - NEXT LAP INVALIDATED",cutsFromBlock), _config.Styles.InvalidStatePopup, 320)
         end
         nextLapIsValid = false
         
     elseif lapIsValid then
         -- If the lap is invalidated for the first time, show a popup
-        _popupService:NewPopup("CORNER CUT - LAP INVALIDATED", _config.Styles.InvalidStatePopup, 300)
+        _popupService:NewPopup(string.format("CORNER CUT x%d - LAP INVALIDATED",cutsFromBlock), _config.Styles.InvalidStatePopup, 300)
 
     elseif _config.PopupEverycut then
         -- Otherwise show this popup instead
-        _popupService:NewPopup("CORNER CUT", _config.Styles.InvalidStatePopup, 300)
+        _popupService:NewPopup(string.format("CORNER CUT x%d",cutsFromBlock), _config.Styles.InvalidStatePopup, 300)
     end
 	LastCornerCutAt = time()
 
@@ -112,7 +112,7 @@ function service:AddCornerCut(nextLapInvalid: boolean)
     sectorIsValid = false
     lapIsValid = false
     
-    _remoteHandler:RequestAddCornerCut()
+    _remoteHandler:RequestAddCornerCut(cutsFromBlock)
 
 end
 

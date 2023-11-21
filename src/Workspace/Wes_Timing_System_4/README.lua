@@ -17,6 +17,7 @@ HOW TO INSTALL:
 4. Duplicate and place the "_CC" parts wherever drivers can exceed track limits.
 If they touch a "_CC" part, their lap will be invalidated.
 You can set the "_CC"'s "InvalidsNextLap" attribute to "true" if you want the "_CC" part to invalidate the driver's next lap.
+You can set a "_CC" part's corner cuts to a custom amount by changing the "CutsFromBlock" attribute.
 5. Move the Board model to wherever you like.
 
 DO NOT UNGROUP ANYTHING! 

@@ -18,6 +18,7 @@ HOW TO INSTALL:
 If they touch a "_CC" part, their lap will be invalidated.
 You can set the "_CC"'s "InvalidsNextLap" attribute to "true" if you want the "_CC" part to invalidate the driver's next lap.
 You can set a "_CC" part's corner cuts to a custom amount by changing the "CutsFromBlock" attribute.
+You can set the minimum speed of a "_CC" part by changing the value of the "MinimumSpeed" attribute (value is in sps!)
 5. Move the Board model to wherever you like.
 
 DO NOT UNGROUP ANYTHING! 

@@ -30,7 +30,13 @@ function handler.HandlePlayerTouch(part: BasePart)
         -- Gets amount of cuts from CC
         local cutsFromBlock = part:GetAttribute("CutsFromBlock")
         if cutsFromBlock == nil then cutsFromBlock = 1 end
-        _keeperService:AddCornerCut(nextLapInvalid, cutsFromBlock)
+        -- Gets minimum speed from CC
+        local minimumSpeed = part:GetAttribute("MinimumSpeed")
+        if minimumSpeed == nil then minimumSpeed = 0 end
+        local characterSpeed = humanoid.Parent.HumanoidRootPart.AssemblyLinearVelocity.Magnitude
+        if characterSpeed > minimumSpeed then
+            _keeperService:AddCornerCut(nextLapInvalid, cutsFromBlock)
+        end
         
     end
 

@@ -34,6 +34,7 @@ function handler.HandlePlayerTouch(part: BasePart)
         local minimumSpeed = part:GetAttribute("MinimumSpeed")
         if minimumSpeed == nil then minimumSpeed = 0 end
         local characterSpeed = humanoid.Parent.HumanoidRootPart.AssemblyLinearVelocity.Magnitude
+        -- Checks the player speed to make sure they are fast enough to get a cut
         if characterSpeed > minimumSpeed then
             _keeperService:AddCornerCut(nextLapInvalid, cutsFromBlock)
         end

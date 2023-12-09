@@ -1,3 +1,5 @@
+local Workspace = game:GetService("Workspace")
+local _Config = require(Workspace.Wes_Timing_System_4._Config)
 local service = {}
 
 --- Updates the lap count of the given player
@@ -57,7 +59,7 @@ end
 --- Adds leaderstats to a new player
 ---@param player Player The new player
 function service.AddPlayer(player: Player)
-    
+    require(script.Parent.TimingCommandsService).AddCommandsToChat(player)
     local leaderstats = player:FindFirstChild("leaderstats")
     if leaderstats == nil then
         leaderstats = Instance.new("IntValue", player)

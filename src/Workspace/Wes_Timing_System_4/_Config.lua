@@ -17,7 +17,7 @@ local config = {
 
 	-- Settings
 	-- Whether the player must be seated or not
-	PlayerMustBeSeated = false,
+	PlayerMustBeSeated = true,
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 	-- Whether or not a popup appears per cut, rather than once per lap
@@ -25,7 +25,7 @@ local config = {
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used
-	CheckForAntiCheat = false,
+	CheckForAntiCheat = true,
 	-- Lap times below this time will be considered as cheating
 	MinimumLapTime = 1,
 	-- Sector times below this time will be considered as cheating

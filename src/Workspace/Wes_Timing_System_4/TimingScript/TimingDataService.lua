@@ -124,9 +124,10 @@ end
 
 --- Adds a CC could to the player
 ---@param player Player The player to be given a CC count
-function service:UpdateCC(player: Player, cutsFromBlock: number)
+function service:UpdateCC(player: Player, cutsFromBlock: number | nil)
 	
 	local playerData = data[player.UserId]
+	if cutsFromBlock == nil then cutsFromBlock = 1 end
 
 	-- If the player data does not exist, add the player
 	if playerData == nil then
@@ -154,6 +155,7 @@ function service:AddPlayer(player: Player): table
 	-- Add new player data
 	playerData = PlayerData.new(player)
 	playerData.LastCornerCutAt = 0
+	playerData.CornerCuts = 0
 	data[player.UserId] = playerData
 
 	return playerData

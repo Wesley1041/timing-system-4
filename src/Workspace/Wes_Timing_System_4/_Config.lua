@@ -17,21 +17,24 @@ local config = {
 
 	-- Settings
 	-- Whether the player must be seated or not
-	PlayerMustBeSeated = true,
+	PlayerMustBeSeated = false,
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 	-- Whether or not a popup appears per cut, rather than once per lap
-	PopupEverycut = false,
+	PopupEverycut = true,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used
-	CheckForAntiCheat = true,
+	CheckForAntiCheat = false,
 	-- Lap times below this time will be considered as cheating
 	MinimumLapTime = 1,
 	-- Sector times below this time will be considered as cheating
 	MinimumSectorTime = 1,
 	-- Whether to kick a user when they are caught cheating
 	KickWhenCheat = true,
+
+	-- Command prefix
+	CommandPrefix = ":",
 
 	-- Input mapping
 	-- Which key should be used in order to view the table GUI on the player's screen

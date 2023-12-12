@@ -13,6 +13,7 @@ local updateLapEvent = _remotes:CreateRemoteEvent("UpdateLapEvent")
 local updateCcEvent = _remotes:CreateRemoteEvent("UpdateCcEvent")
 local resetTimesEvent = _remotes:CreateRemoteEvent("ResetTimesEvent")
 local getCurrentTimesEvent = _remotes:CreateRemoteEvent("GetCurrentTimesEvent")
+local playerPopupEvent = _remotes:CreateRemoteEvent("PlayerPopupEvent")
 
 --- Updates the sector of the given player
 ---@param player Player The player whose sector should be updated
@@ -82,6 +83,21 @@ function handler.GetCurrentTimesEvent(player: Player)
 
 	local data = _dataService:GetSortedTimes()
 	getCurrentTimesEvent:FireClient(player, data)
+
+end
+
+-- Fire popup to client from server
+function handler.fireClientPopup(player: Player | nil, text: string, color: Color3, frameLength: number | nil)
+
+	if text ~= nil then
+		if player ~= nil then
+			playerPopupEvent:FireClient(player, text, color, frameLength)
+		else
+			playerPopupEvent:FireAllClients(text, color, frameLength)
+		end
+	end
+
+	
 
 end
 

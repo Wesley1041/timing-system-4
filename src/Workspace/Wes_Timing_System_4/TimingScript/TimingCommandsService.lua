@@ -19,7 +19,6 @@ function service.AddCommandsToChat(callingPlayer: Player)
                 local loweredString = string.lower(msg)
                 local args = string.split(loweredString," ")
                 for _,command in pairs(commands) do
-                    print(prefix)
                     if args[1] ~= nil and args[1] == prefix .. command then
                         service[command](args, callingPlayer)
                     end
@@ -42,7 +41,7 @@ function SearchPlayer(input: string, callingPlayer: Player): Player | nil
         end
     end
     -- If no player found then
-    _timingRemoteHandler.fireClientPopup(callingPlayer, string.format("$s is not a valid username or display name"), _config.Styles.InvalidStatePopup)
+    _timingRemoteHandler.fireClientPopup(callingPlayer, string.format("\"%s\" is not a valid username or display name",input), _config.Styles.InvalidStatePopup, 400)
     return nil
  end
 
@@ -51,7 +50,7 @@ function service.setlaps(args: {string}, callingPlayer: Player)
     local player = SearchPlayer(args[2], callingPlayer)
     if player ~= nil and args[3] ~= nil then
         _timingDataService:ManualChangeLap(player, args[3])
-        _timingRemoteHandler.fireClientPopup(nil,string.format("Laps changed to %d for %s",args[3],player.Name), _config.Styles.InvalidStatePopup)
+        _timingRemoteHandler.fireClientPopup(nil,string.format("Laps changed to %d for %s",args[3],player.Name), _config.Styles.PersonalBestStatePopup)
     elseif args[3] == nil then 
         _timingRemoteHandler.fireClientPopup(callingPlayer, "No value provided", _config.Styles.InvalidStatePopup)
     elseif tonumber(args[3]) == nil then
@@ -65,7 +64,7 @@ function service.setcuts(args: {string}, callingPlayer: Player)
     local player = SearchPlayer(args[2], callingPlayer)
     if player ~= nil and args[3] ~= nil then
         _timingDataService:UpdateCC(player, args[3])
-        _timingRemoteHandler.fireClientPopup(nil,string.format("Cuts changed to %d for %s",args[3],player.Name), _config.Styles.InvalidStatePopup)
+        _timingRemoteHandler.fireClientPopup(nil,string.format("Cuts changed to %d for %s",args[3],player.Name), _config.Styles.PersonalBestStatePopup)
     elseif args[3] == nil then 
         _timingRemoteHandler.fireClientPopup(callingPlayer, "No value provided", _config.Styles.InvalidStatePopup)
     elseif tonumber(args[3]) == nil then

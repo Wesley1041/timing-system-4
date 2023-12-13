@@ -40,7 +40,31 @@ function service:HandleSector(sector: number)
     elseif sector == 2 then
         sectorTime = time() - sector1At
         sector2At = time()
-    end
+	end
+	
+	-- Get delta time data
+	local deltaTimeData = _dataService:GetDeltaTime(sector, sectorTime, sectorIsValid)
+	
+	-- Display delta time
+	if deltaTimeData ~= nil then
+		
+		-- Popup data
+		local frameColor = _helpers:GetStatePopupColor(deltaTimeData.state)
+		local displayString = _helpers:ConvertTime(math.abs(deltaTimeData.delta))
+
+		-- Improved sector
+		if deltaTimeData.delta <= 0 then
+			displayString = "- " .. displayString
+			
+		-- Slower sector
+		else
+			displayString = "+ " .. displayString
+		end
+		
+		-- Display
+		_popupService:NewPopup(displayString, frameColor)
+	end
+	
 
     -- Update states
     SubmitSectorTime(sector, sectorTime, sectorIsValid)

@@ -20,6 +20,50 @@ function service:UpdateData(newData: table, newBestTime: table)
 
 end
 
+--- Returns the time delta between sectors
+---@param sector number Sector completed
+---@param sectorTime number Time of completed sector
+---@param sectorIsValid boolean If sector time is valid
+---@return table | nil deltaTimeData Contains the delta time between sectors and the status
+function service:GetDeltaTime(sector: number, sectorTime: number, sectorIsValid: boolean): table | nil
+	
+	local deltaTimeData = {}
+	
+	local playerData = data[tostring(localPlayer.UserId)]
+	local personalBest
+	local overallBest
+	
+	-- Grab personal best and overall best sector data
+	if playerData ~= nil then
+		personalBest = playerData.BestLap["Sector" .. tostring(sector)].Time
+	end
+
+	if bestTime ~= nil then
+		overallBest = bestTime.Sectors["Sector" .. tostring(sector)].Time
+	end
+	
+	-- Determine state of current sector time
+	local state = DetermineState(
+		sectorTime, 
+		personalBest, 
+		overallBest, 
+		sectorIsValid
+	)
+	
+	-- Store and return delta time data
+	if personalBest ~= nil then
+		--print(sectorTime)
+		--print(personalBest)
+		deltaTimeData.delta = sectorTime - personalBest
+		deltaTimeData.state = state
+	else
+		deltaTimeData = nil
+	end
+	
+	return deltaTimeData
+	
+end
+
 --- Gets the status of the lap time of the local player, given the lap time
 ---@param lapTime number The lap time
 ---@return number state The state of the lap time

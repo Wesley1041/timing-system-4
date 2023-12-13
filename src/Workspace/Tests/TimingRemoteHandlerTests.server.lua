@@ -28,22 +28,16 @@ function RandomTime()
 end
 
 function AddPlayer(player: Player)
-	
+
 	-- Negative UserID indicates a test player on a test server (Clients and Servers tab)
 	-- i.e. "Player1", "Player2", etc.
 	if player.UserId < 0 then
 		
-		local leaderstats = Instance.new("IntValue", player)
-		leaderstats.Name = "leaderstats"
-
-		local laps = Instance.new("IntValue", leaderstats)
-		laps.Name = "Laps"
-
-		local cornerCuts = Instance.new("IntValue", leaderstats)
-		cornerCuts.Name = "CornerCuts"
-		
+		-- Do a second lap after 5 seconds have passed
 		DoLap(player)
-		
+		task.wait(5)
+		DoLap(player)
+
 	end
 
 end

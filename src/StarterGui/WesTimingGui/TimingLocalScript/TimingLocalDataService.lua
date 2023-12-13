@@ -52,8 +52,6 @@ function service:GetDeltaTime(sector: number, sectorTime: number, sectorIsValid:
 	
 	-- Store and return delta time data
 	if personalBest ~= nil then
-		--print(sectorTime)
-		--print(personalBest)
 		deltaTimeData.delta = sectorTime - personalBest
 		deltaTimeData.state = state
 	else

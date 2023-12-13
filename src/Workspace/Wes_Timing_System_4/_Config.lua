@@ -17,11 +17,13 @@ local config = {
 
 	-- Settings
 	-- Whether the player must be seated or not
-	PlayerMustBeSeated = true,
+	PlayerMustBeSeated = false,
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 	-- Whether or not a popup appears per cut, rather than once per lap
-	PopupEverycut = false,
+	PopupEverycut = true,
+	-- Shows time difference to personal best lap every sector
+	SectorTimeDelta = true,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used

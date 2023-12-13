@@ -43,28 +43,32 @@ function service:HandleSector(sector: number)
 	end
 	
 	-- Get delta time data
-	local deltaTimeData = _dataService:GetDeltaTime(sector, sectorTime, sectorIsValid)
-	
-	-- Display delta time
-	if deltaTimeData ~= nil then
+	if _config.SectorTimeDelta == true then
 		
-		-- Popup data
-		local frameColor = _helpers:GetStatePopupColor(deltaTimeData.state)
-		local displayString = _helpers:ConvertTime(math.abs(deltaTimeData.delta))
+		local deltaTimeData = _dataService:GetDeltaTime(sector, sectorTime, sectorIsValid)
 
-		-- Improved sector
-		if deltaTimeData.delta <= 0 then
-			displayString = "- " .. displayString
+		-- Display delta time
+		if deltaTimeData ~= nil then
+
+			-- Popup data
+			local frameColor = _helpers:GetStatePopupColor(deltaTimeData.state)
+			local displayString = _helpers:ConvertTime(math.abs(deltaTimeData.delta))
+
+			-- Improved sector
+			if deltaTimeData.delta <= 0 then
+				displayString = "- " .. displayString
+
+				-- Slower sector
+			else
+				displayString = "+ " .. displayString
+			end
+
+			-- Display
+			_popupService:NewPopup(displayString, frameColor)
 			
-		-- Slower sector
-		else
-			displayString = "+ " .. displayString
 		end
 		
-		-- Display
-		_popupService:NewPopup(displayString, frameColor)
 	end
-	
 
     -- Update states
     SubmitSectorTime(sector, sectorTime, sectorIsValid)

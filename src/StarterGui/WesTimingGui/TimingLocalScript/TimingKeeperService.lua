@@ -43,9 +43,9 @@ function service:HandleSector(sector: number)
 	end
 	
 	-- Get delta time data
-	if _config.SectorTimeDelta == true then
-		
-		local deltaTimeData = _dataService:GetDeltaTime(sector, sectorTime, sectorIsValid)
+	if _config.TimeDeltaToBestLap then
+
+		local deltaTimeData = _dataService:GetDeltaTime(sector, {sector1At, sector2At, lapStartAt}, sectorIsValid)
 
 		-- Display delta time
 		if deltaTimeData ~= nil then
@@ -56,24 +56,24 @@ function service:HandleSector(sector: number)
 
 			-- Improved sector
 			if deltaTimeData.delta <= 0 then
-				displayString = "- " .. displayString
+				displayString = "-" .. displayString
 
 				-- Slower sector
 			else
-				displayString = "+ " .. displayString
+				displayString = "+" .. displayString
 			end
 
 			-- Display
 			_popupService:NewPopup(displayString, frameColor)
-			
-		end
-		
-	end
 
+		end
+
+	end
+	
     -- Update states
     SubmitSectorTime(sector, sectorTime, sectorIsValid)
-    currentSector += 1
-    sectorIsValid = true
+	currentSector += 1
+	sectorIsValid = true
 
 end
 

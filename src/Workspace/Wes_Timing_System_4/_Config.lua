@@ -1,5 +1,5 @@
 local config = {
-	
+
 	-- Admin users
 	-- List of users who are able to reset the timing board
 	AdminUsers = {"Wesley1041", "SomebodyElse"},
@@ -21,13 +21,15 @@ local config = {
 	-- How much time must be elapsed between two CCs in order for them to count twice
 	CornerCutCooldownSeconds = 1,
 	-- Whether or not a popup appears per cut, rather than once per lap
-	PopupEverycut = true,
+	PopupEverycut = false,
+	-- Whether or not the name displayed on the leaderboard is the username or display name
+	ShowDisplayNames = false,
 	-- Shows time difference to personal best lap every sector
-	SectorTimeDelta = true,
+	TimeDeltaToBestLap = true,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used
-	CheckForAntiCheat = true,
+	CheckForAntiCheat = false,
 	-- Lap times below this time will be considered as cheating
 	MinimumLapTime = 1,
 	-- Sector times below this time will be considered as cheating

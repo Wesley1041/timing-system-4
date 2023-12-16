@@ -22,39 +22,64 @@ end
 
 --- Returns the time delta between sectors
 ---@param sector number Sector completed
----@param sectorTime number Time of completed sector
+---@param timeAt table The time() of each sector start
 ---@param sectorIsValid boolean If sector time is valid
 ---@return table | nil deltaTimeData Contains the delta time between sectors and the status
-function service:GetDeltaTime(sector: number, sectorTime: number, sectorIsValid: boolean): table | nil
-	
-	local deltaTimeData = {}
+function service:GetDeltaTime(sector: number, timeAt: table, sectorIsValid: boolean): table | nil
 	
 	local playerData = data[tostring(localPlayer.UserId)]
-	local personalBest
-	local overallBest
 	
-	-- Grab personal best and overall best sector data
-	if playerData ~= nil then
-		personalBest = playerData.BestLap["Sector" .. tostring(sector)].Time
+	local deltaTimeData = {}
+	local personalBest = {}
+	local overallBest = {}
+	
+	if playerData ~= nil and playerData.BestLap.LapTime ~= nil then
+		
+		-- No previous sector to compare to
+		if sector == 1 then
+			personalBest.PreviousSector = 0
+		else
+			personalBest.PreviousSector = playerData.BestLap["Sector" .. tostring(sector - 1)].Time
+		end
+		
+		personalBest.CurrentSector = playerData.BestLap["Sector" .. tostring(sector)].Time
+		personalBest.Total = personalBest.CurrentSector + personalBest.PreviousSector
 	end
+	
+	if bestTime ~= nil and bestTime.Lap.LapTime ~= nil then
 
-	if bestTime ~= nil then
-		overallBest = bestTime.Sectors["Sector" .. tostring(sector)].Time
+		-- No previous sector to compare to
+		if sector == 1 then
+			overallBest.PreviousSector = 0
+		else
+			overallBest.PreviousSector = bestTime.Sectors["Sector" .. tostring(sector - 1)].Time
+		end
+
+		overallBest.CurrentSector = bestTime.Sectors["Sector" .. tostring(sector)].Time
+		overallBest.Total = overallBest.CurrentSector + overallBest.PreviousSector
 	end
 	
-	-- Determine state of current sector time
-	local state = DetermineState(
-		sectorTime, 
-		personalBest, 
-		overallBest, 
-		sectorIsValid
-	)
-	
-	-- Store and return delta time data
-	if personalBest ~= nil then
-		deltaTimeData.delta = sectorTime - personalBest
+	-- Store and return delta time data if personal best lap exists
+	if personalBest.CurrentSector ~= nil then
+		
+		-- Determine with timeAt to use
+		-- sectorTimeAt - lapStartAt
+		local currentLapTotal = timeAt[sector] - timeAt[3]
+		
+		-- Determine state of current sector time
+		local state = DetermineState(
+			currentLapTotal, 
+			personalBest.Total, 
+			overallBest.Total, 
+			sectorIsValid
+		)
+		
+		-- Set delta data
+		deltaTimeData.delta = currentLapTotal - personalBest.Total
 		deltaTimeData.state = state
 	else
+		
+		-- No lap data to compare current time to
 		deltaTimeData = nil
 	end
 	

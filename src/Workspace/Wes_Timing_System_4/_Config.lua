@@ -25,11 +25,11 @@ local config = {
 	-- Whether or not the name displayed on the leaderboard is the username or display name
 	ShowDisplayNames = false,
 	-- Shows time difference to personal best lap every sector
-	TimeDeltaToBestLap = true,
+	TimeDeltaToBestLap = false,
 
 	-- Anti Cheat
 	-- Whether anti-cheat should be used
-	CheckForAntiCheat = false,
+	CheckForAntiCheat = true,
 	-- Lap times below this time will be considered as cheating
 	MinimumLapTime = 1,
 	-- Sector times below this time will be considered as cheating

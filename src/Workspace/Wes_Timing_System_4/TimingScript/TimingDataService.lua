@@ -109,7 +109,6 @@ end
 ---@param newLaps number The new amount of laps the player will have
 function service:ManualChangeLap(player: Player, newLaps: number)
 
-	print("Will it work? who knows")
 	local playerData = data[player.UserId]
 
 	-- If the player data does not exist, add the player

@@ -2,7 +2,7 @@ local config = {
 	
 	-- Admin users
 	-- List of users who are able to reset the timing board
-	AdminUsers = {"Wesley1041", "SomebodyElse"},
+	AdminUsers = {"Wesley1041", "SomebodyElse", "Player1", "Player2"},
 	-- List of groups and ranks that are able to reset the timing board
 	AdminRoles = {
 		{
@@ -34,6 +34,9 @@ local config = {
 	MinimumSectorTime = 1,
 	-- Whether to kick a user when they are caught cheating
 	KickWhenCheat = true,
+
+	-- Command prefix
+	CommandPrefix = ":",
 
 	-- Input mapping
 	-- Which key should be used in order to view the table GUI on the player's screen

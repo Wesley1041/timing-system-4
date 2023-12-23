@@ -3,6 +3,10 @@ local service = {}
 -- Services
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
+local _remotes = require(workspace.Wes_Timing_System_4.Modules.RemotesLocal)
+
+-- Remotes
+local playerPopupEvent = _remotes:GetRemoteEvent("PlayerPopupEvent")
 
 -- Variables
 local player = game.Players.LocalPlayer
@@ -95,5 +99,9 @@ function SlideGuiObject(object: GuiObject, targetScale: number, movementDuration
     end
 
 end
+
+playerPopupEvent.OnClientEvent:Connect(function(text: string, color: Color3, frameLength: number | nil)
+    service:NewPopup(text, color, frameLength)
+end)
 
 return service

@@ -1,3 +1,4 @@
+local Workspace = game:GetService("Workspace")
 local service = {}
 
 -- Modules
@@ -8,6 +9,7 @@ local State = require(script.Parent.Parent.DataModels.State)
 local _config = require(script.Parent.Parent._Config)
 local _leaderstatsService = require(script.Parent.TimingLeaderstatsService)
 local _dataHelpers = require(script.Parent.Parent.Modules.TimingDataHelpers)
+local _Config = require(Workspace.Wes_Timing_System_4._Config)
 
 -- Variables
 local data = {}
@@ -80,13 +82,15 @@ function service:UpdateLap(player: Player, lapTime: number, isValid: boolean)
 	-- Update Lap time
 	playerData.CurrentLap.LapTime = lapTime
 	playerData.CurrentLap.State = state
+	
 	-- Add lap to list of laps
 	table.insert(playerData.LapTimes, playerData.CurrentLap)
+
 	-- Update personal best
 	if state == State.OverallBest or state == State.PersonalBest then
 		playerData.BestLap = playerData.CurrentLap
 	end
-	
+
 	-- Update overall best
 	if state == State.OverallBest then
 		UpdateBestLap(playerData)
@@ -94,16 +98,35 @@ function service:UpdateLap(player: Player, lapTime: number, isValid: boolean)
 	
 	-- Add lap
 	playerData.Laps += 1
+
 	playerData.LastUpdatedAt = time()
 	_leaderstatsService:UpdateLap(player, playerData.Laps)
 	
 end
 
+--- Used by chat commands to manually set a player's laps
+---@param player Player The player whose lap should be updated
+---@param newLaps number The new amount of laps the player will have
+function service:ManualChangeLap(player: Player, newLaps: number)
+
+	local playerData = data[player.UserId]
+
+	-- If the player data does not exist, add the player
+	if playerData == nil then
+		playerData = service:AddPlayer(player)
+	end
+
+	playerData.Laps = newLaps
+	_leaderstatsService:UpdateLap(player, playerData.Laps)
+
+end
+
 --- Adds a CC could to the player
 ---@param player Player The player to be given a CC count
-function service:UpdateCC(player: Player, cutsFromBlock: number)
+function service:UpdateCC(player: Player, cutsFromBlock: number | nil)
 	
 	local playerData = data[player.UserId]
+	if cutsFromBlock == nil then cutsFromBlock = 1 end
 
 	-- If the player data does not exist, add the player
 	if playerData == nil then
@@ -131,6 +154,7 @@ function service:AddPlayer(player: Player): table
 	-- Add new player data
 	playerData = PlayerData.new(player)
 	playerData.LastCornerCutAt = 0
+	playerData.CornerCuts = 0
 	data[player.UserId] = playerData
 
 	return playerData

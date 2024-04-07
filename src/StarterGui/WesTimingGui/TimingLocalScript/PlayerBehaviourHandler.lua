@@ -47,7 +47,11 @@ end
 ---@param character Model The player's character
 function handler.WatchForTriggers(character: Model)
 
+    -- Assert that the character's primary part has loaded before proceeding
+    repeat task.wait() until character.PrimaryPart ~= nil
+
     local head = character.PrimaryPart
+
     head.Touched:Connect(handler.HandlePlayerTouch)
 
 end
@@ -56,7 +60,9 @@ function handler:Init()
     
     player.CharacterAdded:Connect(handler.WatchForTriggers)
 
-    task.wait()
+    -- Assert that the player's character has loaded before proceeding
+    repeat task.wait() until player.Character ~= nil
+    
     handler.WatchForTriggers(player.Character)
 
 end

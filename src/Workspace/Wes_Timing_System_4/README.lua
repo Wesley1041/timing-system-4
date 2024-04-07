@@ -1,7 +1,7 @@
 --[[
 ----------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
-Wesley1041's Timing System 4 v1.2-beta
+Wesley1041's Timing System 4 v1.2.1-beta
 
 This fourth timing system is designed to be compatible with places that use StreamingEnabled.
 It is the most feature-rich and modular timing system yet.
